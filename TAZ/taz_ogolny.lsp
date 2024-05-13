@@ -99,4 +99,13 @@
     (command "_laymch" taz_obiekt_do_zmiany_warstwy "" "" "_Y")
 	(setq taz_obiekt_do_zmiany_warstwy (ssadd))
   )
+  (princ)
+)
+
+(defun c:taz_przypisz_wlasciwosci()
+  (setq taz_obiekt_zrodlowy_do_przypisania_wlasciwosci (entsel "\nWybierz obiekt zrodlowy: "))
+  (prompt "\nWybierz obiekty docelowe: ")
+  (setq taz_obiekty_docelowe_do_przypisania_wlasciwosci (ssget))
+  (command "_matchprop" taz_obiekt_zrodlowy_do_przypisania_wlasciwosci taz_obiekty_docelowe_do_przypisania_wlasciwosci "")
+  (princ)
 )
