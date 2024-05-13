@@ -1,0 +1,6 @@
+(vla-load (vla-get-menugroups (vlax-get-acad-object)) "C:\\TAZ\\taz.cuix")
+(command "-TOOLBAR" "TAZ" "Float" "400,210" "1")
+(princ "\n##############################################")
+(princ "\n########## ZAINSTALOWANO TOOLBAR AZ ##########")
+(princ "\n##############################################")
+(princ)
