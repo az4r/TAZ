@@ -329,12 +329,26 @@
   (princ)
 )
 
+(defun taz_wczytaj_style_wielolinii_odniesienia()
+  (setq taz_aktualny_styl_wielolinii_odniesienia (getvar "CMLEADERSTYLE"))
+  (if (dictsearch (cdr (assoc -1 (dictSearch (namedObjDict) "ACAD_MLEADERSTYLE"))) "TAZ_1")
+    (princ)
+	(progn
+      (setq taz_baza_styli_wielolinii_odniesienia (vlax-ename->vla-object (cdr (assoc -1 (dictSearch (namedObjDict) "ACAD_MLEADERSTYLE")))))
+      (setq taz_vtaz_1 (vlax-invoke-method taz_baza_styli_wielolinii_odniesienia 'AddObject "TAZ_1" "AcDbMLeaderStyle"))
+      ;(vlax-put-property taz_vtaz_1 'LandingGap 0.4)
+	)
+  )
+  (command "_setvar" "CMLEADERSTYLE" taz_aktualny_styl_wielolinii_odniesienia)
+)
+
 ;#######################################################################################################################
 
 (defun taz_start()
   (taz_wczytaj_warstwy)
   (taz_wczytaj_style_tekstu)
   (taz_wczytaj_style_wymiarow)
+  (taz_wczytaj_style_wielolinii_odniesienia)
   (load "C:\\TAZ\\taz_ogolny.lsp")
   (princ)
 )
