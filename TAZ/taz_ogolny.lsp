@@ -104,8 +104,9 @@
 
 (defun taz_przypisz_wlasciwosci()
   (setq taz_obiekt_zrodlowy_do_przypisania_wlasciwosci (entsel "\nWybierz obiekt zrodlowy: "))
-  (prompt "\nWybierz obiekty docelowe: ")
-  (setq taz_obiekty_docelowe_do_przypisania_wlasciwosci (ssget))
+  (setq taz_obiekty_docelowe_do_przypisania_wlasciwosci_p1 (getpoint "\nWybierz obiekty docelowe: "))
+  (setq taz_obiekty_docelowe_do_przypisania_wlasciwosci_p2 (getcorner taz_obiekty_docelowe_do_przypisania_wlasciwosci_p1 "\nWybierz obiekty docelowe: "))
+  (setq taz_obiekty_docelowe_do_przypisania_wlasciwosci (ssget "_C" taz_obiekty_docelowe_do_przypisania_wlasciwosci_p1 taz_obiekty_docelowe_do_przypisania_wlasciwosci_p2))
   (command "_matchprop" taz_obiekt_zrodlowy_do_przypisania_wlasciwosci taz_obiekty_docelowe_do_przypisania_wlasciwosci "")
   (princ)
 )
@@ -296,10 +297,19 @@
     (progn
       (setq taz_aktualna_warstwa (getvar "CLAYER"))
       (command "_layer" "_S" "TAZ_TEXT" "")
-      (command "_dimcontinue" "_S")
-      (while (> (getvar 'cmdactive) 0) (command pause))
+      (command "_dimcontinue")
+      ;(while (> (getvar 'cmdactive) 0) (command pause))
       (command "_layer" "_S" taz_aktualna_warstwa "")
     )
+  )
+  (princ)
+)
+
+(defun taz_przetnij_w_punkcie()
+  (repeat 100
+	(setq taz_przetnij_w_punkcie_obiekt (entsel "\nWskaz obiekt do przeciecia: "))
+	(setq taz_przetnij_w_punkcie_p1 (getpoint "\nWskaz punkt przeciecia: "))
+	(command "_break" taz_przetnij_w_punkcie_obiekt "_F" taz_przetnij_w_punkcie_p1 taz_przetnij_w_punkcie_p1)
   )
   (princ)
 )
