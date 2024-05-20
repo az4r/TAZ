@@ -1,3 +1,7 @@
+(defun taz_zmienne_wejsciowe()
+  (setq taz_kota_gora_aktualny_poziom "0.000")
+)
+
 (defun taz_wczytaj_warstwy()
   (setq taz_aktualna_warstwa (getvar "CLAYER"))
   (if (tblsearch "LAYER" "TAZ_THIN")
@@ -448,6 +452,7 @@
 ;#######################################################################################################################
 
 (defun taz_start()
+  (taz_zmienne_wejsciowe)
   (taz_wczytaj_warstwy)
   (taz_wczytaj_style_tekstu)
   (taz_wczytaj_style_wymiarow)
