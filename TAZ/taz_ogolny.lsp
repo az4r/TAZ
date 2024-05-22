@@ -836,5 +836,4 @@
   (setvar "CELTYPE" taz_aktualny_styl_linii)
   (setvar "CELTSCALE" taz_aktualna_skala_rodzaju_linii)
   (princ)
-  (princ)
 )
