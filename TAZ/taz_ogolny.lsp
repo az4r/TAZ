@@ -806,7 +806,7 @@
   (defun *error* ( taz_przyczyna_bledu )
     (command)(command)
     (setq taz_batting_scalenie (ssadd))
-	(command "_layer" "_S" taz_aktualna_warstwa "")
+    (command "_layer" "_S" taz_aktualna_warstwa "")
     (setvar "CELTYPE" taz_aktualny_styl_linii)
     (setvar "CELTSCALE" taz_aktualna_skala_rodzaju_linii)
     (princ)
