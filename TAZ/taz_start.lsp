@@ -449,6 +449,13 @@
   (command "_setvar" "CMLEADERSTYLE" taz_aktualny_styl_wielolinii_odniesienia)
 )
 
+(defun taz_lista ( taz_lista_string / taz_lista_pozycja )
+	(if (setq taz_lista_pozycja (vl-string-position 32 taz_lista_string))
+		(cons (substr taz_lista_string 1 taz_lista_pozycja) (taz_lista (substr taz_lista_string (+ taz_lista_pozycja 2))))
+		(list taz_lista_string)
+    )
+)
+
 ;#######################################################################################################################
 
 (defun taz_start()
