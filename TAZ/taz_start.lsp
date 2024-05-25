@@ -1,5 +1,9 @@
 (defun taz_zmienne_wejsciowe()
   (setq taz_kota_gora_aktualny_poziom "0.000")
+  (setq taz_aktualne_polaczenie_zakladkowe_rodzaj_sruby "12")
+  (setq taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie "2")
+  (setq taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")
+  (princ)
 )
 
 (defun taz_wczytaj_warstwy()
@@ -465,6 +469,7 @@
   (taz_wczytaj_style_wymiarow)
   (taz_wczytaj_style_wielolinii_odniesienia)
   (load "C:\\TAZ\\taz_ogolny.lsp")
+  (load "C:\\TAZ\\taz_stal.lsp")
   (princ)
 )
 

@@ -1123,7 +1123,7 @@
   (princ)
 )
 
-(defun taz_symbol_otworu_okraglego()
+(defun taz_symbol_otworu_okraglego( / *error* )
   (defun *error* ( taz_przyczyna_bledu )
     (command)(command)
     (setq taz_symbol_otworu_okraglego_pomoc_scalenie (ssadd))
