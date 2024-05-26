@@ -3,6 +3,12 @@
   (setq taz_aktualne_polaczenie_zakladkowe_rodzaj_sruby "12")
   (setq taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie "2")
   (setq taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")
+  (setq taz_polaczenie_zakladkowe_rodzaj_sruby "0")
+  (setq taz_polaczenie_parametr_s "12")
+  (setq taz_polaczenie_parametr_p "21")
+  (setq taz_polaczenie_parametr_e "11")
+  (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "2")
+  (setq taz_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")  
   (princ)
 )
 
@@ -454,10 +460,10 @@
 )
 
 (defun taz_lista ( taz_lista_string / taz_lista_pozycja )
-	(if (setq taz_lista_pozycja (vl-string-position 32 taz_lista_string))
-		(cons (substr taz_lista_string 1 taz_lista_pozycja) (taz_lista (substr taz_lista_string (+ taz_lista_pozycja 2))))
-		(list taz_lista_string)
-    )
+  (if (setq taz_lista_pozycja (vl-string-position 32 taz_lista_string))
+    (cons (substr taz_lista_string 1 taz_lista_pozycja) (taz_lista (substr taz_lista_string (+ taz_lista_pozycja 2))))
+    (list taz_lista_string)
+  )
 )
 
 ;#######################################################################################################################
