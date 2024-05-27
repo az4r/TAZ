@@ -310,3 +310,13 @@
   (end_image)
   (princ)
 )
+
+(defun Ttaz_polaczenie_zakladkowe_prekroj_schemat (taz_polaczenie_zakladkowe_prekroj_schemat_key / i j)
+  (setq i (/ (dimx_tile taz_polaczenie_zakladkowe_prekroj_schemat_key) 201.) j (/ (dimy_tile taz_polaczenie_zakladkowe_prekroj_schemat_key) 201.))
+  (start_image taz_polaczenie_zakladkowe_prekroj_schemat_key)
+  (fill_image 0 0 (dimx_tile taz_polaczenie_zakladkowe_prekroj_schemat_key)(dimy_tile taz_polaczenie_zakladkowe_prekroj_schemat_key) -15)
+  (foreach x '((37 84 37 53 250) (80 84 80 53 250) (27 62 89 62 250) (46 53 27 71 250) (71 71 89 53 250) (80 84 80 53 250) (119 84 119 53 250) (71 62 128 62 250) (89 53 71 71 250) (110 71 128 53 250) (119 84 119 53 250) (128 53 110 71 250) (37 105 200 105 250) (200 123 37 123 250) (37 123 37 105 250) (0 123 162 123 250) (162 123 162 142 250) (162 142 0 142 250) (72 105 72 142 250) (88 105 88 142 250) (111 105 111 142 250) (127 105 127 142 250) (80 105 80 142 250) (119 105 119 142 250) (0 118 0 148 250) (200 99 200 129 250))
+  (vector_image (fix (* (car x) i))(fix (* (cadr x) j))(fix (* (caddr x) i))(fix (* (cadddr x) j))(last x)))
+  (end_image)
+  (princ)
+)
