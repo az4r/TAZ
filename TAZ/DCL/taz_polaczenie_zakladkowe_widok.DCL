@@ -28,21 +28,18 @@ taz_polaczenie_zakladkowe_widok_okno : dialog {
       width = 4;
       }
     : edit_box {
-      key = "taz_polaczenie_parametr_s_dcl";
+      key = "taz_polaczenie_zakladkowe_parametr_s_dcl";
       label = "";
-      //value = "12";
       edit_width = 1;
       }
     : edit_box {
-      key = "taz_polaczenie_parametr_p_dcl";
+      key = "taz_polaczenie_zakladkowe_parametr_p_dcl";
       label = "";
-      //value = "21";
       edit_width = 1;
       }
     : edit_box {
-      key = "taz_polaczenie_parametr_e_dcl";
+      key = "taz_polaczenie_zakladkowe_parametr_e_dcl";
       label = "";
-      //value = "11";
       edit_width = 1;
       }
       }
@@ -62,7 +59,6 @@ taz_polaczenie_zakladkowe_widok_okno : dialog {
       key = "taz_polaczenie_zakladkowe_ilosc_srub_w_pionie_dcl";
       label = "";
       alignment = centered;
-      //value = "2";
       edit_width = 1;
       action = "(taz_polaczenie_zakladkowe_widok_korekta_rozstawu)";
       }
@@ -82,7 +78,6 @@ taz_polaczenie_zakladkowe_widok_okno : dialog {
       key = "taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl";
       label = "";
       alignment = centered;
-      //value = "2";
       edit_width = 1;
       action = "(taz_polaczenie_zakladkowe_widok_korekta_rozstawu)";
       }
