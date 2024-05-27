@@ -466,6 +466,16 @@
   )
 )
 
+(defun taz_wyjscie_z_funkcji()
+  (if (equal taz_wyjscie_z_funkcji_status "1")
+    (progn 
+      (setq taz_wyjscie_z_funkcji_status "0")
+      (*error*)
+    )
+    (princ)
+  )
+)
+
 ;#######################################################################################################################
 
 (defun taz_start()

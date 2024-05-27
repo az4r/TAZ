@@ -86,7 +86,7 @@
    (set_tile "taz_polaczenie_zakladkowe_ilosc_srub_w_pionie_dcl" taz_polaczenie_zakladkowe_ilosc_srub_w_pionie)
    (action_tile
      "cancel"
-     "(setq taz_wyjscie_z_funkcji \"1\")
+     "(setq taz_wyjscie_z_funkcji_status \"1\")
      (done_dialog)"
    )
    (action_tile
@@ -102,13 +102,7 @@
    (taz_polaczenie_zakladkowe_widok_schemat "taz_polaczenie_zakladkowe_widok_schemat_key")
    (start_dialog)
    (unload_dialog (load_dialog "C:\\TAZ\\DCL\\taz_polaczenie_zakladkowe_widok.DCL"))
-   (if (equal taz_wyjscie_z_funkcji "1")
-     (progn 
-       (setq taz_wyjscie_z_funkcji "0")
-       (*error*)
-     )
-     (princ)
-   )
+   (taz_wyjscie_z_funkcji)
    (cond
      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "0") (taz_polaczenie_zakladkowe_widok_wywolaj_okno_niepoprawne_dane))
      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "") (taz_polaczenie_zakladkowe_widok_wywolaj_okno_niepoprawne_dane))
@@ -143,7 +137,7 @@
   (set_tile "taz_polaczenie_zakladkowe_ilosc_srub_w_pionie_dcl" taz_polaczenie_zakladkowe_ilosc_srub_w_pionie)
   (action_tile
     "cancel"
-    "(setq taz_wyjscie_z_funkcji \"1\")
+    "(setq taz_wyjscie_z_funkcji_status \"1\")
     (done_dialog)"
   )
   (action_tile
@@ -158,13 +152,7 @@
   (taz_polaczenie_zakladkowe_widok_schemat "taz_polaczenie_zakladkowe_widok_schemat_key")
   (start_dialog)
   (unload_dialog (load_dialog "C:\\TAZ\\DCL\\taz_polaczenie_zakladkowe_widok.DCL"))
-  (if (equal taz_wyjscie_z_funkcji "1")
-    (progn 
-      (setq taz_wyjscie_z_funkcji "0")
-      (*error*)
-    )
-    (princ)
-  )
+  (taz_wyjscie_z_funkcji)
   (cond
     ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "0") (taz_polaczenie_zakladkowe_widok_wywolaj_okno_niepoprawne_dane))
     ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "") (taz_polaczenie_zakladkowe_widok_wywolaj_okno_niepoprawne_dane))
