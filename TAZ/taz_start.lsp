@@ -8,7 +8,8 @@
   (setq taz_polaczenie_zakladkowe_parametr_p "21")
   (setq taz_polaczenie_zakladkowe_parametr_e "11")
   (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "2")
-  (setq taz_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")  
+  (setq taz_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")
+  (setq taz_polaczenie_zakladkowe_grubosc_blachy "10")
   (princ)
 )
 

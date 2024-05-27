@@ -1,11 +1,11 @@
-taz_polaczenie_zakladkowe_widok_okno : dialog {
-  label = "TAZ POLACZENIE ZAKLADKOWE WIDOK";
+taz_polaczenie_zakladkowe_przekroj_okno : dialog {
+  label = "TAZ POLACZENIE ZAKLADKOWE PRZEKROJ";
   : row {
     alignment = centered;
     fixed_height = true;
     fixed_width = true;
     : text {
-      key = "taz_polaczenie_zakladkowe_widok_txt1";
+      key = "taz_polaczenie_zakladkowe_przekroj_txt1";
       label = "Typ sruby: ";
       }
     : popup_list {
@@ -24,11 +24,8 @@ taz_polaczenie_zakladkowe_widok_okno : dialog {
     alignment = centered;
     fixed_height = true;
     fixed_width = true;
-    : spacer {
-      width = 4;
-      }
     : edit_box {
-      key = "taz_polaczenie_zakladkowe_parametr_s_dcl";
+      key = "taz_polaczenie_zakladkowe_parametr_e_dcl";
       label = "";
       edit_width = 1;
       }
@@ -37,10 +34,8 @@ taz_polaczenie_zakladkowe_widok_okno : dialog {
       label = "";
       edit_width = 1;
       }
-    : edit_box {
-      key = "taz_polaczenie_zakladkowe_parametr_e_dcl";
-      label = "";
-      edit_width = 1;
+    : spacer {
+      width = 15;
       }
       }
   : row {
@@ -48,42 +43,37 @@ taz_polaczenie_zakladkowe_widok_okno : dialog {
     fixed_height = true;
     fixed_width = true;
     : image {
-      height = 15.36;
+      height = 5.36;
       width = 33.26;
-      key = "taz_polaczenie_zakladkowe_widok_schemat_key";
+      key = "taz_polaczenie_zakladkowe_przekroj_schemat_key";
       //color = 0;
       is_enabled = false;
       is_tab_stop = false;
       }
     : edit_box {
-      key = "taz_polaczenie_zakladkowe_ilosc_srub_w_pionie_dcl";
+      key = "taz_polaczenie_zakladkowe_grubosc_blachy_dcl";
       label = "";
       alignment = centered;
       edit_width = 1;
-      action = "(taz_polaczenie_zakladkowe_widok_korekta_rozstawu)";
-      }
-    : text {
-      key = "taz_polaczenie_zakladkowe_widok_txt2";
-      label = "ny";
       }
       }
   : row {
     alignment = centered;
     fixed_height = true;
     fixed_width = true;
-    : spacer {
-      width = 8;
-      }
     : edit_box {
       key = "taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl";
       label = "";
       alignment = centered;
       edit_width = 1;
-      action = "(taz_polaczenie_zakladkowe_widok_korekta_rozstawu)";
+      action = "(taz_polaczenie_zakladkowe_przekroj_korekta_rozstawu)";
       }
     : text {
-      key = "taz_polaczenie_zakladkowe_widok_txt3";
+      key = "taz_polaczenie_zakladkowe_przekroj_txt2";
       label = "nx";
+      }
+    : spacer {
+      width = 5;
       }
       }
   : spacer {

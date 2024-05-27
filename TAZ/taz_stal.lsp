@@ -64,6 +64,13 @@
   )
 )
 
+(defun taz_polaczenie_zakladkowe_przekroj_korekta_rozstawu()
+  (if (equal (get_tile "taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl") "1")
+    (set_tile "taz_polaczenie_zakladkowe_parametr_p_dcl" "0")
+    (princ)
+  )
+)
+
 (defun taz_polaczenie_zakladkowe_widok ( / *error* )
   (defun *error* ( taz_przyczyna_bledu )
     (command)(command)
@@ -142,7 +149,8 @@
   )
   (action_tile
     "accept"
-    "(setq taz_polaczenie_zakladkowe_parametr_s (get_tile \"taz_polaczenie_zakladkowe_parametr_s_dcl\"))
+    "(setq taz_polaczenie_zakladkowe_rodzaj_sruby (get_tile \"taz_polaczenie_zakladkowe_rodzaj_sruby_dcl\"))
+	(setq taz_polaczenie_zakladkowe_parametr_s (get_tile \"taz_polaczenie_zakladkowe_parametr_s_dcl\"))
     (setq taz_polaczenie_zakladkowe_parametr_p (get_tile \"taz_polaczenie_zakladkowe_parametr_p_dcl\"))
     (setq taz_polaczenie_zakladkowe_parametr_e (get_tile \"taz_polaczenie_zakladkowe_parametr_e_dcl\"))
     (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie (get_tile \"taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl\"))
@@ -230,7 +238,7 @@
 (defun taz_polaczenie_zakladkowe_przekroj ( / *error* )
   (defun *error* ( taz_przyczyna_bledu )
     (command)(command)
-	(command "_erase" taz_polaczenie_zakladkowe_scalenie "")
+    (command "_erase" taz_polaczenie_zakladkowe_scalenie "")
     (setq taz_polaczenie_zakladkowe_scalenie (ssadd))
     (command "_UCS" "_P")
     (command "_layer" "_S" taz_aktualna_warstwa "")
@@ -239,33 +247,96 @@
   (command "_UCS" "_W")
   (setq taz_aktualna_warstwa (getvar "CLAYER"))
   
-  
-  
-  
-  
-  
-  (taz_polaczenie_zakladkowe_parametry)
-  
-  
-  
-  
-  
-  
-  
-  (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie (getstring (strcat "\nPodaj ilosc srub w polaczeniu poziomo: <" taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie ">")))
-  (if (equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "")
-      (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
-      (princ)
+  (defun taz_polaczenie_zakladkowe_przekroj_wywolaj_okno()
+    (new_dialog "taz_polaczenie_zakladkowe_przekroj_okno" (load_dialog "C:\\TAZ\\DCL\\taz_polaczenie_zakladkowe_przekroj.DCL"))
+    (set_tile "taz_polaczenie_zakladkowe_rodzaj_sruby_dcl" taz_polaczenie_zakladkowe_rodzaj_sruby)
+    (set_tile "taz_polaczenie_zakladkowe_grubosc_blachy_dcl" taz_polaczenie_zakladkowe_grubosc_blachy)
+    (set_tile "taz_polaczenie_zakladkowe_parametr_p_dcl" taz_polaczenie_zakladkowe_parametr_p)
+    (set_tile "taz_polaczenie_zakladkowe_parametr_e_dcl" taz_polaczenie_zakladkowe_parametr_e)
+    (set_tile "taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl" taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
+    (action_tile
+      "cancel"
+      "(setq taz_wyjscie_z_funkcji_status \"1\")
+      (done_dialog)"
+    )
+    (action_tile
+      "accept"
+      "(setq taz_polaczenie_zakladkowe_rodzaj_sruby (get_tile \"taz_polaczenie_zakladkowe_rodzaj_sruby_dcl\"))
+      (setq taz_polaczenie_zakladkowe_grubosc_blachy (get_tile \"taz_polaczenie_zakladkowe_grubosc_blachy_dcl\"))
+      (setq taz_polaczenie_zakladkowe_parametr_p (get_tile \"taz_polaczenie_zakladkowe_parametr_p_dcl\"))
+      (setq taz_polaczenie_zakladkowe_parametr_e (get_tile \"taz_polaczenie_zakladkowe_parametr_e_dcl\"))
+      (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie (get_tile \"taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl\"))
+      (done_dialog)"
+    )
+    (taz_polaczenie_zakladkowe_przekroj_schemat "taz_polaczenie_zakladkowe_przekroj_schemat_key")
+    (start_dialog)
+    (unload_dialog (load_dialog "C:\\TAZ\\DCL\\taz_polaczenie_zakladkowe_przekroj.DCL"))
+    (taz_wyjscie_z_funkcji)
+    (cond
+      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "0") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_grubosc_blachy "0") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_grubosc_blachy "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_grubosc_blachy nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_grubosc_blachy "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_p "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_p nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_parametr_p "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ;((equal taz_polaczenie_zakladkowe_parametr_e "0") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_e "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_e nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_parametr_e "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+    )
   )
   
-  (setq taz_polaczenie_grubosc_blachy (getstring (strcat "\nPodaj sumaryczna grubosc blach w polaczeniu: <" taz_polaczenie_zal_grubosc_blachy ">")))
-  (if (equal taz_polaczenie_grubosc_blachy "")
-      (setq taz_polaczenie_grubosc_blachy taz_polaczenie_zal_grubosc_blachy)
-      (princ)
+  (defun taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane()
+    (alert "Niepoprawne dane")			
+    (new_dialog "taz_polaczenie_zakladkowe_przekroj_okno" (load_dialog "C:\\TAZ\\DCL\\taz_polaczenie_zakladkowe_przekroj.DCL"))
+    (set_tile "taz_polaczenie_zakladkowe_rodzaj_sruby_dcl" taz_polaczenie_zakladkowe_rodzaj_sruby)
+    (set_tile "taz_polaczenie_zakladkowe_grubosc_blachy_dcl" taz_polaczenie_zakladkowe_grubosc_blachy)
+    (set_tile "taz_polaczenie_zakladkowe_parametr_p_dcl" taz_polaczenie_zakladkowe_parametr_p)
+    (set_tile "taz_polaczenie_zakladkowe_parametr_e_dcl" taz_polaczenie_zakladkowe_parametr_e)
+    (set_tile "taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl" taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
+    (action_tile
+      "cancel"
+      "(setq taz_wyjscie_z_funkcji_status \"1\")
+      (done_dialog)"
+    )
+    (action_tile
+      "accept"
+      "(setq taz_polaczenie_zakladkowe_rodzaj_sruby (get_tile \"taz_polaczenie_zakladkowe_rodzaj_sruby_dcl\"))
+      (setq taz_polaczenie_zakladkowe_grubosc_blachy (get_tile \"taz_polaczenie_zakladkowe_grubosc_blachy_dcl\"))
+      (setq taz_polaczenie_zakladkowe_parametr_p (get_tile \"taz_polaczenie_zakladkowe_parametr_p_dcl\"))
+      (setq taz_polaczenie_zakladkowe_parametr_e (get_tile \"taz_polaczenie_zakladkowe_parametr_e_dcl\"))
+      (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie (get_tile \"taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie_dcl\"))
+      (done_dialog)"
+    )
+    (taz_polaczenie_zakladkowe_przekroj_schemat "taz_polaczenie_zakladkowe_przekroj_schemat_key")
+    (start_dialog)
+    (unload_dialog (load_dialog "C:\\TAZ\\DCL\\taz_polaczenie_zakladkowe_przekroj.DCL"))
+    (taz_wyjscie_z_funkcji)
+    (cond
+      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "0") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_grubosc_blachy "0") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_grubosc_blachy "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_grubosc_blachy nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_grubosc_blachy "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_p "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_p nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_parametr_p "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ;((equal taz_polaczenie_zakladkowe_parametr_e "0") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_e "") (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((equal taz_polaczenie_zakladkowe_parametr_e nil) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+      ((not (wcmatch taz_polaczenie_zakladkowe_parametr_e "#,##")) (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno_niepoprawne_dane))
+    )
   )
-  
+  (taz_polaczenie_zakladkowe_przekroj_wywolaj_okno)
   (setq taz_polaczenie_zakladkowe_przekroj_punkt_wstawienia (getpoint "\nWskaz punkt wstawienia polaczenia: "))
-  
   (setq taz_polaczenie_zakladkowe_scalenie (ssadd))
   
   ;######### OTWORY #########
@@ -273,13 +344,12 @@
   (command "_layer" "_S" "TAZ_AXIS" "")
   (setq taz_polaczenie_zakladkowe_aktualny_punktx "0")
   (setq taz_polaczenie_zakladkowe_aktualny_punkty "0")
-  
-    (repeat (atoi taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
-      (command "_pline" (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx) (- (atoi taz_polaczenie_zakladkowe_aktualny_punkty) (/ (atoi taz_polaczenie_grubosc_blachy) 2))) (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx) (+ (atoi taz_polaczenie_zakladkowe_aktualny_punkty) (/ (atoi taz_polaczenie_grubosc_blachy) 2))) "") (ssadd (entlast) taz_polaczenie_zakladkowe_scalenie)
-      (setq taz_polaczenie_zakladkowe_srodek (list (/ (cadr (assoc 10 (entget (entlast)))) 2) 0))
-      (setq taz_polaczenie_zakladkowe_aktualny_koncowy_punktx (itoa (atoi taz_polaczenie_zakladkowe_aktualny_punktx)))
-      (setq taz_polaczenie_zakladkowe_aktualny_punktx (itoa (+ (atoi taz_polaczenie_zakladkowe_aktualny_punktx) (atoi taz_polaczenie_zakladkowe_parametr_p))))
-    )
+  (repeat (atoi taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie)
+    (command "_pline" (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx) (- (atoi taz_polaczenie_zakladkowe_aktualny_punkty) (/ (atoi taz_polaczenie_zakladkowe_grubosc_blachy) 1))) (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx) (+ (atoi taz_polaczenie_zakladkowe_aktualny_punkty) (/ (atoi taz_polaczenie_zakladkowe_grubosc_blachy) 1))) "") (ssadd (entlast) taz_polaczenie_zakladkowe_scalenie)
+    (setq taz_polaczenie_zakladkowe_srodek (list (/ (cadr (assoc 10 (entget (entlast)))) 2) 0))
+    (setq taz_polaczenie_zakladkowe_aktualny_koncowy_punktx (itoa (atoi taz_polaczenie_zakladkowe_aktualny_punktx)))
+    (setq taz_polaczenie_zakladkowe_aktualny_punktx (itoa (+ (atoi taz_polaczenie_zakladkowe_aktualny_punktx) (atoi taz_polaczenie_zakladkowe_parametr_p))))
+  )
   
   ;######### KRAWEDZ BLACHY #########
   (command "_layer" "_S" "TAZ_VIEW" "")
@@ -287,11 +357,16 @@
   (setq taz_polaczenie_zakladkowe_aktualny_punkty1 "0")
   (setq taz_polaczenie_zakladkowe_aktualny_punktx2 "0")
   (setq taz_polaczenie_zakladkowe_aktualny_punkty2 "0")
+  (setq taz_polaczenie_zakladkowe_aktualny_punktx3 "0")
+  (setq taz_polaczenie_zakladkowe_aktualny_punkty3 "0")
   (setq taz_polaczenie_zakladkowe_aktualny_punktx1 (itoa (- (atoi taz_polaczenie_zakladkowe_aktualny_punktx1) (atoi taz_polaczenie_zakladkowe_parametr_e))))
-  (setq taz_polaczenie_zakladkowe_aktualny_punkty1 (itoa (- (atoi taz_polaczenie_zakladkowe_aktualny_punkty1) (/ (atoi taz_polaczenie_grubosc_blachy) 2))))
+  (setq taz_polaczenie_zakladkowe_aktualny_punkty1 (itoa (- (atoi taz_polaczenie_zakladkowe_aktualny_punkty1) (atoi taz_polaczenie_zakladkowe_grubosc_blachy))))
   (setq taz_polaczenie_zakladkowe_aktualny_punktx2 (itoa (+ (atoi taz_polaczenie_zakladkowe_aktualny_koncowy_punktx) (atoi taz_polaczenie_zakladkowe_parametr_e))))
-  (setq taz_polaczenie_zakladkowe_aktualny_punkty2 (itoa (* (atoi taz_polaczenie_zakladkowe_aktualny_punkty1) -1)))
+  (setq taz_polaczenie_zakladkowe_aktualny_punkty2 (itoa (+ (atoi taz_polaczenie_zakladkowe_aktualny_punkty1) (atoi taz_polaczenie_zakladkowe_grubosc_blachy))))
+  (setq taz_polaczenie_zakladkowe_aktualny_punktx3 (itoa (+ (atoi taz_polaczenie_zakladkowe_aktualny_koncowy_punktx) (atoi taz_polaczenie_zakladkowe_parametr_e))))
+  (setq taz_polaczenie_zakladkowe_aktualny_punkty3 (itoa (+ (atoi taz_polaczenie_zakladkowe_aktualny_punkty2) (atoi taz_polaczenie_zakladkowe_grubosc_blachy))))
   (command "_rectang" (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx1) (atoi taz_polaczenie_zakladkowe_aktualny_punkty1)) (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx2) (atoi taz_polaczenie_zakladkowe_aktualny_punkty2))) (ssadd (entlast) taz_polaczenie_zakladkowe_scalenie)
+  (command "_rectang" (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx1) (atoi taz_polaczenie_zakladkowe_aktualny_punkty2)) (list (atoi taz_polaczenie_zakladkowe_aktualny_punktx3) (atoi taz_polaczenie_zakladkowe_aktualny_punkty3))) (ssadd (entlast) taz_polaczenie_zakladkowe_scalenie)
   (command "_ZOOM" "_SCALE" "0.0001X")
   (command "_group" "_C" "*" "" taz_polaczenie_zakladkowe_scalenie "")
   (command "_move" taz_polaczenie_zakladkowe_scalenie "" taz_polaczenie_zakladkowe_srodek taz_polaczenie_zakladkowe_przekroj_punkt_wstawienia)
@@ -311,12 +386,12 @@
   (princ)
 )
 
-(defun Ttaz_polaczenie_zakladkowe_prekroj_schemat (taz_polaczenie_zakladkowe_prekroj_schemat_key / i j)
-  (setq i (/ (dimx_tile taz_polaczenie_zakladkowe_prekroj_schemat_key) 201.) j (/ (dimy_tile taz_polaczenie_zakladkowe_prekroj_schemat_key) 201.))
-  (start_image taz_polaczenie_zakladkowe_prekroj_schemat_key)
-  (fill_image 0 0 (dimx_tile taz_polaczenie_zakladkowe_prekroj_schemat_key)(dimy_tile taz_polaczenie_zakladkowe_prekroj_schemat_key) -15)
-  (foreach x '((37 84 37 53 250) (80 84 80 53 250) (27 62 89 62 250) (46 53 27 71 250) (71 71 89 53 250) (80 84 80 53 250) (119 84 119 53 250) (71 62 128 62 250) (89 53 71 71 250) (110 71 128 53 250) (119 84 119 53 250) (128 53 110 71 250) (37 105 200 105 250) (200 123 37 123 250) (37 123 37 105 250) (0 123 162 123 250) (162 123 162 142 250) (162 142 0 142 250) (72 105 72 142 250) (88 105 88 142 250) (111 105 111 142 250) (127 105 127 142 250) (80 105 80 142 250) (119 105 119 142 250) (0 118 0 148 250) (200 99 200 129 250))
-  (vector_image (fix (* (car x) i))(fix (* (cadr x) j))(fix (* (caddr x) i))(fix (* (cadddr x) j))(last x)))
+(defun taz_polaczenie_zakladkowe_przekroj_schemat (taz_polaczenie_zakladkowe_przekroj_schemat_key / i j)
+  (setq i (/ (dimx_tile taz_polaczenie_zakladkowe_przekroj_schemat_key) 201.) j (/ (dimy_tile taz_polaczenie_zakladkowe_przekroj_schemat_key) 71.))
+  (start_image taz_polaczenie_zakladkowe_przekroj_schemat_key)
+  (fill_image 0 0 (dimx_tile taz_polaczenie_zakladkowe_przekroj_schemat_key)(dimy_tile taz_polaczenie_zakladkowe_przekroj_schemat_key) -15)
+  (foreach x '((34 22 34 0 250) (66 22 66 0 250) (27 6 73 6 250) (41 0 27 13 250) (59 13 73 0 250) (66 22 66 0 250) (95 22 95 0 250) (59 6 102 6 250) (73 0 59 13 250) (88 13 102 0 250) (95 22 95 0 250) (102 0 88 13 250) (34 38 154 38 250) (154 52 34 52 250) (34 52 34 38 250) (7 52 127 52 250) (127 52 127 65 250) (127 65 7 65 250) (60 38 60 65 250) (72 38 72 65 250) (89 38 89 65 250) (101 38 101 65 250) (66 38 66 65 250) (95 38 95 65 250) (7 47 7 70 250) (154 34 154 56 250) (170 38 192 38 250) (170 52 192 52 250) (186 31 186 58 250) (192 45 179 31 250) (179 45 192 58 250) (170 52 192 52 250) (192 58 179 45 250))
+    (vector_image (fix (* (car x) i))(fix (* (cadr x) j))(fix (* (caddr x) i))(fix (* (cadddr x) j))(last x)))
   (end_image)
   (princ)
 )
