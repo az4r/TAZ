@@ -1,8 +1,5 @@
 (defun taz_zmienne_wejsciowe()
   (setq taz_kota_gora_aktualny_poziom "0.000")
-  (setq taz_aktualne_polaczenie_zakladkowe_rodzaj_sruby "12")
-  (setq taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_poziomie "2")
-  (setq taz_aktualne_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")
   (setq taz_polaczenie_zakladkowe_rodzaj_sruby "0")
   (setq taz_polaczenie_zakladkowe_parametr_s "12")
   (setq taz_polaczenie_zakladkowe_parametr_p "21")
