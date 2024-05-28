@@ -7,6 +7,9 @@
   (setq taz_polaczenie_zakladkowe_ilosc_srub_w_poziomie "2")
   (setq taz_polaczenie_zakladkowe_ilosc_srub_w_pionie "2")
   (setq taz_polaczenie_zakladkowe_grubosc_blachy "10")
+  (setq taz_aktualna_liczba_pretow_rozstaw "150")
+  (setq taz_aktualna_dlugosc_preta_otulina1 "0")
+  (setq taz_aktualna_dlugosc_preta_otulina2 "0")
   (princ)
 )
 
@@ -457,6 +460,8 @@
   (command "_setvar" "CMLEADERSTYLE" taz_aktualny_styl_wielolinii_odniesienia)
 )
 
+;################################### FUNKCJE POMOCNICZE ################################################################
+
 (defun taz_lista ( taz_lista_string / taz_lista_pozycja )
   (if (setq taz_lista_pozycja (vl-string-position 32 taz_lista_string))
     (cons (substr taz_lista_string 1 taz_lista_pozycja) (taz_lista (substr taz_lista_string (+ taz_lista_pozycja 2))))
@@ -474,6 +479,11 @@
   )
 )
 
+(defun taz_zaokragl_w_dol_do_5 (taz_zmienna_zakraglona_w_dol_do_5)
+  ;(* 5 (fix (/ taz_zmienna_zakraglona_w_dol_do_5 5)))
+  (* 5 (fix (+ (/ taz_zmienna_zakraglona_w_dol_do_5 5) 0.0001)))
+)
+
 ;#######################################################################################################################
 
 (defun taz_start()
@@ -484,6 +494,7 @@
   (taz_wczytaj_style_wielolinii_odniesienia)
   (load "C:\\TAZ\\taz_ogolny.lsp")
   (load "C:\\TAZ\\taz_stal.lsp")
+  (load "C:\\TAZ\\taz_zelbet.lsp")
   (princ)
 )
 
