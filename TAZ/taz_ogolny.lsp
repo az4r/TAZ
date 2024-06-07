@@ -1,3 +1,8 @@
+(defun taz_warstwa_zero()
+  (command "_layer" "_S" "0" "")
+  (princ)
+)
+
 (defun taz_warstwa_thin()
   (if (tblsearch "LAYER" "TAZ_THIN")
     (command "_layer" "_S" "TAZ_THIN" "")
