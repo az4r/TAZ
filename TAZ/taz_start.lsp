@@ -39,7 +39,7 @@
   )
   (if (tblsearch "LAYER" "TAZ_HELP")
     (princ)
-    (command "_layer" "_M" "TAZ_HELP" "_C" "6" "" "")
+    (command "_layer" "_M" "TAZ_HELP" "_C" "6" "" "_P" "_N" "" "")
   )
   (if (tblsearch "LAYER" "TAZ_CUT")
     (princ)
