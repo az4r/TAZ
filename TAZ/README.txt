@@ -8,7 +8,7 @@
 ####      INSTALACJA:     ####
 ##############################
 
-1. Katalog "TAZ" pownien znajdować się bezpośrednio w lokalizacji "C:/".
+1. Katalog "TAZ" pownien znajdować się bezpośrednio w lokalizacji "C:\".
 2. W celu kontynuowania instalacji należy wpisać w linii komend AutoCAD następującą komendę:
 (load "C:\\TAZ\\_INSTALL.lsp")
 
@@ -43,7 +43,7 @@
 ####  HOW TO INSTALL:  ####
 ###########################
 
-1. Directory "TAZ" should be placed directly in "C:/" location.
+1. Directory "TAZ" should be placed directly in "C:\" location.
 2. Type in your command line (in AutoCAD):
 (load "C:\\TAZ\\_INSTALL.lsp")
 
