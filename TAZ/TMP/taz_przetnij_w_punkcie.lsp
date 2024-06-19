@@ -1,0 +1,12 @@
+(defun c:taz_przetnij_w_punkcie( / *error* )
+  (defun *error* ( taz_przyczyna_bledu )
+    (command)
+    (princ)
+  )
+  (repeat 100
+    (setq taz_przetnij_w_punkcie_obiekt (entsel "\nWskaz obiekt do przeciecia: "))
+    (setq taz_przetnij_w_punkcie_p1 (getpoint "\nWskaz punkt przeciecia: "))
+    (command "_break" taz_przetnij_w_punkcie_obiekt "_F" taz_przetnij_w_punkcie_p1 taz_przetnij_w_punkcie_p1)
+  )
+  (princ)
+)
